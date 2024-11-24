@@ -7,7 +7,7 @@ def nice_string_count(strings)
   forbiden = %w[ab cd pq xy]
 
 
-  strings.split.count do |string|
+  strings.count do |string|
     # Vérifie les 3 voyelles
     vowels_count = string.scan(/[a e i o u]/).size
 
@@ -22,6 +22,19 @@ def nice_string_count(strings)
   end
 end
 
+def advanced_nice_strings_count(strings)
+  strings.count do |string|
+    # Vérifie une paire de deux lettres répétée non chevauchante
+    has_repeated_pair = string =~ /([a-z]{2}).*\1/
+    
+    # Vérifie une lettre répétée avec une autre lettre entre les deux
+    has_split_repeat = string =~ /([a-z]).\1/
+    
+    # Les deux conditions doivent être remplies
+    has_repeated_pair && has_split_repeat
+  end
+end
 
-strings = File.read("input.txt")
-p nice_string_count(strings)
+strings = File.readlines("input.txt", chomp: true)
+puts nice_string_count(strings)
+puts advanced_nice_strings_count(strings)
